@@ -3,56 +3,321 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      Digihood Studio | Building Blocks - Digital Marketing Agency in Kathmandu
-    </title>
+    <meta name="theme-color" content="#05070f" />
+    <title>Digihood Studio</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
+
     <style>
-      * {
-        font-family: "Inter", sans-serif;
+      :root {
+        --bg0: #05070f;
+        --bg1: #070b17;
+        --bg2: #0a1026;
+
+        --glass0: rgba(255, 255, 255, 0.06);
+        --glass1: rgba(255, 255, 255, 0.03);
+        --border: rgba(255, 255, 255, 0.1);
+
+        --a1: #38bdf8; /* sky-400 */
+        --a2: #2563eb; /* blue-600 */
+        --a3: #1e40af; /* blue-800 */
+
+        --brand0: #05070f;
+        --brand1: #071b36;
+        --brand2: #0b3a6a;
+
+        /* Webflow commonly uses Inter as its default UI font */
+        --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        --font-display: "Inter", system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial;
       }
+
       html {
         scroll-behavior: smooth;
       }
+      body {
+        font-family: var(--font-body);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      .font-display {
+        font-family: var(--font-display);
+        letter-spacing: -0.02em;
+      }
+
+      /* Better anchor fallback (keeps top alignment perfect under fixed nav) */
+      section {
+        scroll-margin-top: 90px;
+      }
+
+      /* Premium dark backdrop */
+      body {
+        background: radial-gradient(
+            1200px circle at 12% 20%,
+            rgba(56, 189, 248, 0.11),
+            transparent 55%
+          ),
+          radial-gradient(
+            900px circle at 85% 30%,
+            rgba(37, 99, 235, 0.12),
+            transparent 55%
+          ),
+          linear-gradient(180deg, var(--bg0), var(--bg1) 44%, var(--bg0) 100%);
+      }
+
+      /* Subtle animated "atmosphere" (GPU-friendly) */
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(
+            900px circle at var(--cursorX, 18%) var(--cursorY, 22%),
+            rgba(56, 189, 248, 0.08),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px circle at var(--cursorX2, 82%) var(--cursorY2, 44%),
+            rgba(37, 99, 235, 0.09),
+            transparent 60%
+          );
+        opacity: 0.9;
+        mix-blend-mode: screen;
+        transition: opacity 600ms ease;
+      }
+
+      /* Ultra subtle grain */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image: radial-gradient(
+          rgba(255, 255, 255, 0.05) 1px,
+          transparent 1px
+        );
+        background-size: 3px 3px;
+        opacity: 0.045;
+        transform: translateZ(0);
+      }
+
+      ::selection {
+        background: rgba(56, 189, 248, 0.25);
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Accent system */
       .gradient-text {
         background: linear-gradient(
           135deg,
-          #6366f1 0%,
-          #a855f7 50%,
-          #ec4899 100%
+          var(--a1) 0%,
+          var(--a2) 55%,
+          var(--a3) 100%
         );
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        background-size: 220% 220%;
+        animation: gradientShift 12s ease infinite;
       }
-      .hero-gradient {
+
+      .btn-primary {
         background: linear-gradient(
           135deg,
-          #0f0f1a 0%,
-          #1a1a2e 50%,
-          #16213e 100%
+          var(--a1) 0%,
+          var(--a2) 55%,
+          var(--a3) 100%
         );
+        background-size: 220% 220%;
+        animation: gradientShift 12s ease infinite;
+        box-shadow: 0 18px 40px rgba(37, 99, 235, 0.22),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+        cursor: pointer;
       }
+
+      button,
+      [role="button"],
+      input[type="submit"] {
+        cursor: pointer;
+      }
+      .btn-primary:hover {
+        filter: brightness(1.06);
+      }
+
+      .brand-badge {
+        background: linear-gradient(
+          135deg,
+          var(--brand0) 0%,
+          var(--brand1) 55%,
+          var(--brand2) 100%
+        );
+        background-size: 220% 220%;
+        animation: gradientShift 18s ease infinite;
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+          0 16px 34px rgba(0, 0, 0, 0.35);
+      }
+
+      .hero-gradient {
+        background: radial-gradient(
+            900px circle at 18% 20%,
+            rgba(56, 189, 248, 0.12),
+            transparent 60%
+          ),
+          radial-gradient(
+            900px circle at 82% 55%,
+            rgba(37, 99, 235, 0.1),
+            transparent 60%
+          ),
+          linear-gradient(135deg, var(--bg0) 0%, var(--bg2) 55%, #070e24 100%);
+      }
+
       .card-gradient {
         background: linear-gradient(
           145deg,
-          rgba(255, 255, 255, 0.05) 0%,
-          rgba(255, 255, 255, 0.02) 100%
+          var(--glass0) 0%,
+          var(--glass1) 100%
         );
       }
+
       .glow {
-        box-shadow: 0 0 60px rgba(99, 102, 241, 0.3);
+        box-shadow: 0 0 70px rgba(37, 99, 235, 0.25);
       }
+
+      /*
+        3D / FX system
+        - "fx-card" combines reveal + tilt (tilt only activates on desktop pointers)
+        - no direct transform overrides (all via CSS variables)
+      */
+      .fx-card {
+        position: relative;
+        transform-style: preserve-3d;
+        will-change: transform;
+        isolation: isolate;
+
+        /* reveal defaults */
+        opacity: 0;
+        --revealY: 18px;
+        --revealRX: 7deg;
+        --revealScale: 0.985;
+
+        /* tilt defaults */
+        --tiltX: 0deg;
+        --tiltY: 0deg;
+
+        /* hover lift defaults */
+        --liftY: 0px;
+
+        /* press */
+        --press: 1;
+
+        /* shine */
+        --shine: 0;
+        --mx: 50%;
+        --my: 40%;
+
+        transform: perspective(1100px)
+          rotateX(calc(var(--tiltX) + var(--revealRX))) rotateY(var(--tiltY))
+          translateY(calc(var(--revealY) + var(--liftY)))
+          scale(var(--revealScale)) scale(var(--press));
+
+        transition: opacity 700ms ease,
+          transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 300ms ease,
+          border-color 300ms ease, filter 250ms ease;
+      }
+
+      .fx-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: var(--shine);
+        transition: opacity 180ms ease;
+        background: radial-gradient(
+          600px circle at var(--mx) var(--my),
+          rgba(255, 255, 255, 0.16),
+          transparent 50%
+        );
+        mix-blend-mode: screen;
+        z-index: 0;
+      }
+
+      .fx-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .fx-card.is-visible {
+        opacity: 1;
+        --revealY: 0px;
+        --revealRX: 0deg;
+        --revealScale: 1;
+      }
+
+      /* After reveal completes, make hover interactions snappier */
+      .fx-card.fx-live {
+        transition: transform 170ms cubic-bezier(0.2, 0.8, 0.2, 1),
+          box-shadow 300ms ease, border-color 300ms ease, filter 250ms ease;
+      }
+
       .service-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 25px 50px rgba(99, 102, 241, 0.2);
+        --liftY: -10px;
+        box-shadow: 0 25px 60px rgba(37, 99, 235, 0.2);
       }
+
+      /* Subtle idle motion (starts only after reveal; animates --liftY so it won't fight 3D tilt) */
+      .service-card.fx-live {
+        animation: cardDriftVar 10.5s ease-in-out infinite;
+      }
+      .service-card.fx-live:nth-child(2n) {
+        animation-duration: 11.8s;
+        animation-delay: -2.3s;
+      }
+      .service-card.fx-live:nth-child(3n) {
+        animation-duration: 12.6s;
+        animation-delay: -4.1s;
+      }
+      .service-card.fx-live:nth-child(5n) {
+        animation-duration: 13.5s;
+        animation-delay: -3.2s;
+      }
+
+      @keyframes cardDriftVar {
+        0%,
+        100% {
+          --liftY: 0px;
+        }
+        50% {
+          --liftY: -6px;
+        }
+      }
+
       .floating {
         animation: float 6s ease-in-out infinite;
       }
@@ -65,61 +330,192 @@
           transform: translateY(-20px);
         }
       }
+
       .pulse-glow {
-        animation: pulseGlow 2s ease-in-out infinite;
+        animation: pulseGlow 2.2s ease-in-out infinite;
       }
       @keyframes pulseGlow {
         0%,
         100% {
-          box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+          box-shadow: 0 0 18px rgba(56, 189, 248, 0.28);
         }
         50% {
-          box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+          box-shadow: 0 0 42px rgba(37, 99, 235, 0.45);
+        }
+      }
+
+      /* ----------------------------
+         Active nav (scroll spy)
+         ---------------------------- */
+      .nav-link {
+        position: relative;
+        border-radius: 9999px !important;
+        isolation: isolate;
+      }
+
+      .nav-link::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        border-radius: inherit;
+        padding: 2px;
+        background: linear-gradient(
+          135deg,
+          var(--a1) 0%,
+          var(--a2) 45%,
+          var(--a3) 70%,
+          var(--a1) 100%
+        );
+        background-size: 300% 300%;
+        opacity: 0;
+        transition: opacity 250ms ease;
+        pointer-events: none;
+        z-index: -1;
+
+        -webkit-mask: linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+      }
+
+      .nav-link:hover::before {
+        opacity: 0.55;
+      }
+
+      .nav-link.nav-active::before {
+        opacity: 1;
+        animation: navBorderShift 3.5s ease infinite;
+      }
+
+      .nav-link.nav-active {
+        text-shadow: 0 0 22px rgba(56, 189, 248, 0.22);
+      }
+
+      @keyframes navBorderShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Scroll progress */
+      #scrollProgress {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 2px;
+        width: 0%;
+        background: linear-gradient(90deg, var(--a1), var(--a2), var(--a3));
+        background-size: 220% 220%;
+        animation: gradientShift 12s ease infinite;
+        opacity: 0.9;
+      }
+
+      /* Reduced motion: keep things premium but respectful */
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        body::before,
+        body::after {
+          display: none;
+        }
+        .floating,
+        .pulse-glow,
+        .btn-primary,
+        .brand-badge,
+        .gradient-text,
+        #scrollProgress,
+        .nav-link.nav-active::before,
+        .service-card.fx-live {
+          animation: none !important;
+        }
+        .fx-card {
+          transition: none !important;
+          transform: none !important;
+          opacity: 1 !important;
         }
       }
     </style>
   </head>
-  <body class="bg-[#0a0a0f] text-white">
+
+  <body class="text-white">
     <!-- Navigation -->
     <nav
       id="navbar"
       class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     >
+      <div id="scrollProgress"></div>
+
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div class="flex items-center justify-between">
-          <a href="#" class="flex items-center gap-3">
+          <a href="/" data-route="/home" class="flex items-center gap-3">
             <div
-              class="w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center font-bold text-lg"
+              class="brand-badge w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg overflow-hidden select-none"
+              title='Put your logo file named "digilogo.png" next to index.html'
             >
-              D
+              <img
+                class="company-logo w-full h-full object-contain p-1.5"
+                src="digilogo.png"
+                alt="Company logo"
+                onerror="this.classList.add('hidden'); this.parentElement.querySelector('.logo-fallback').classList.remove('hidden');"
+              />
+              <span class="logo-fallback hidden">D</span>
             </div>
             <div>
-              <span class="text-lg sm:text-xl font-bold">Digihood</span>
-              <span class="text-lg sm:text-xl font-light text-purple-400"
+              <span class="text-lg sm:text-xl font-bold font-display"
+                >Digihood</span
+              >
+              <span class="text-lg sm:text-xl font-light text-sky-400"
                 >Studio</span
               >
             </div>
           </a>
+
           <div class="hidden md:flex items-center gap-8">
-            <a href="#home" class="text-gray-300 hover:text-white transition"
+            <a
+              href="/home"
+              data-route="/home"
+              class="nav-link text-gray-300 hover:text-white transition px-4 py-2"
               >Home</a
             >
             <a
-              href="#services"
-              class="text-gray-300 hover:text-white transition"
+              href="/services"
+              data-route="/services"
+              class="nav-link text-gray-300 hover:text-white transition px-4 py-2"
               >Services</a
             >
-            <a href="#about" class="text-gray-300 hover:text-white transition"
+            <a
+              href="/about"
+              data-route="/about"
+              class="nav-link text-gray-300 hover:text-white transition px-4 py-2"
               >About</a
+            >
+            <a
+              href="/contact"
+              data-route="/contact"
+              class="nav-link text-gray-300 hover:text-white transition px-4 py-2"
+              >Contact</a
             >
 
             <a
-              href="#contact"
-              class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-6 py-2.5 rounded-full font-medium hover:opacity-90 transition"
+              href="/contact"
+              data-route="/contact"
+              class="btn-primary px-6 py-2.5 rounded-full font-medium transition"
               >Get Started</a
             >
           </div>
-          <button id="menuBtn" class="md:hidden text-white">
+
+          <button
+            id="menuBtn"
+            class="md:hidden text-white"
+            aria-label="Open menu"
+          >
             <svg
               class="w-6 h-6"
               fill="none"
@@ -136,29 +532,42 @@
           </button>
         </div>
       </div>
+
       <!-- Mobile Menu -->
       <div
         id="mobileMenu"
-        class="hidden md:hidden bg-[#0f0f1a]/95 backdrop-blur-lg border-t border-white/10"
+        class="hidden md:hidden bg-[#05070f]/92 backdrop-blur-lg border-t border-white/10"
       >
         <div class="px-4 sm:px-6 py-4 flex flex-col gap-4">
-          <a href="#home" class="text-gray-300 hover:text-white transition py-2"
+          <a
+            href="/home"
+            data-route="/home"
+            class="nav-link text-gray-300 hover:text-white transition py-2 px-4"
             >Home</a
           >
           <a
-            href="#services"
-            class="text-gray-300 hover:text-white transition py-2"
+            href="/services"
+            data-route="/services"
+            class="nav-link text-gray-300 hover:text-white transition py-2 px-4"
             >Services</a
           >
           <a
-            href="#about"
-            class="text-gray-300 hover:text-white transition py-2"
+            href="/about"
+            data-route="/about"
+            class="nav-link text-gray-300 hover:text-white transition py-2 px-4"
             >About</a
+          >
+          <a
+            href="/contact"
+            data-route="/contact"
+            class="nav-link text-gray-300 hover:text-white transition py-2 px-4"
+            >Contact</a
           >
 
           <a
-            href="#contact"
-            class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-6 py-2.5 rounded-full font-medium text-center"
+            href="/contact"
+            data-route="/contact"
+            class="btn-primary px-6 py-2.5 rounded-full font-medium text-center transition"
             >Get Started</a
           >
         </div>
@@ -168,23 +577,24 @@
     <!-- Hero Section -->
     <section
       id="home"
-      class="hero-gradient min-h-screen flex items-center relative overflow-hidden"
+      class="hero-gradient min-h-[92vh] md:min-h-[94vh] flex items-start relative overflow-hidden"
     >
       <div class="absolute inset-0 overflow-hidden">
         <div
-          class="absolute -top-10 -left-16 sm:top-1/4 sm:left-1/4 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-purple-500/20 rounded-full blur-3xl floating"
+          class="absolute -top-10 -left-16 sm:top-1/4 sm:left-1/4 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-sky-500/15 rounded-full blur-3xl floating"
         ></div>
         <div
-          class="absolute bottom-0 right-0 sm:bottom-1/4 sm:right-1/4 w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 bg-indigo-500/20 rounded-full blur-3xl floating"
+          class="absolute bottom-0 right-0 sm:bottom-1/4 sm:right-1/4 w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 bg-blue-500/15 rounded-full blur-3xl floating"
           style="animation-delay: -3s"
         ></div>
         <div
-          class="hidden sm:block absolute top-1/2 right-1/3 w-48 h-48 md:w-64 md:h-64 bg-pink-500/10 rounded-full blur-3xl floating"
+          class="hidden sm:block absolute top-1/2 right-1/3 w-48 h-48 md:w-64 md:h-64 bg-indigo-500/10 rounded-full blur-3xl floating"
           style="animation-delay: -1.5s"
         ></div>
       </div>
+
       <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-16 md:pb-24 relative z-10"
+        class="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-10 md:pt-20 md:pb-12 relative z-10"
       >
         <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
@@ -192,12 +602,13 @@
               class="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 mb-6"
             >
               <span
-                class="w-2 h-2 bg-green-400 rounded-full animate-pulse"
+                class="w-2 h-2 bg-sky-400 rounded-full animate-pulse"
               ></span>
               <span class="text-sm text-gray-300"
                 >Digital Marketing Agency in Kathmandu</span
               >
             </div>
+
             <h1
               class="font-bold leading-tight mb-6 text-3xl sm:text-4xl md:text-5xl"
             >
@@ -207,17 +618,20 @@
                 >For Your Digital Success</span
               >
             </h1>
+
             <p
               class="text-base sm:text-lg md:text-xl text-gray-400 mb-8 leading-relaxed"
             >
               We craft powerful digital strategies that transform your brand's
-              online presence. From SEO to social media, we're your one-stop
+              online presence. From SEO to social media, we are your one-stop
               solution for digital growth.
             </p>
+
             <div class="flex flex-wrap gap-4">
               <a
-                href="#contact"
-                class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-8 py-4 rounded-full font-semibold hover:opacity-90 transition inline-flex items-center gap-2 pulse-glow"
+                href="/contact"
+                data-route="/contact"
+                class="btn-primary px-8 py-4 rounded-full font-semibold transition inline-flex items-center gap-2 pulse-glow"
               >
                 Start Your Project
                 <svg
@@ -235,12 +649,14 @@
                 </svg>
               </a>
               <a
-                href="#services"
+                href="/services"
+                data-route="/services"
                 class="border border-white/20 px-8 py-4 rounded-full font-semibold hover:bg-white/5 transition"
               >
                 View Our Services
               </a>
             </div>
+
             <div class="flex flex-wrap items-center gap-6 sm:gap-8 mt-10">
               <div>
                 <div class="text-2xl sm:text-3xl font-bold gradient-text">
@@ -270,23 +686,24 @@
               </div>
             </div>
           </div>
+
           <div class="relative hidden lg:block">
             <div class="relative w-full h-[500px]">
               <div
-                class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl glow"
+                class="absolute inset-0 bg-gradient-to-br from-sky-500/15 via-blue-500/15 to-indigo-500/15 rounded-3xl glow"
               ></div>
               <div
-                class="absolute inset-4 card-gradient backdrop-blur-sm rounded-2xl border border-white/10 p-8 flex items-center justify-center"
+                class="absolute inset-4 card-gradient fx-card backdrop-blur-sm rounded-2xl border border-white/10 p-8 flex items-center justify-center"
               >
                 <div class="grid grid-cols-2 gap-4 w-full">
                   <div
-                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-purple-500/50 transition"
+                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-sky-400/40 transition"
                   >
                     <div
-                      class="w-12 h-12 bg-indigo-500/20 rounded-lg flex items-center justify-center mb-4"
+                      class="w-12 h-12 bg-sky-500/15 rounded-lg flex items-center justify-center mb-4"
                     >
                       <svg
-                        class="w-6 h-6 text-indigo-400"
+                        class="w-6 h-6 text-sky-300"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -302,14 +719,15 @@
                     <div class="text-white font-semibold">SEO</div>
                     <div class="text-gray-400 text-sm">Rank Higher</div>
                   </div>
+
                   <div
-                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-purple-500/50 transition"
+                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-sky-400/40 transition"
                   >
                     <div
-                      class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4"
+                      class="w-12 h-12 bg-blue-500/15 rounded-lg flex items-center justify-center mb-4"
                     >
                       <svg
-                        class="w-6 h-6 text-purple-400"
+                        class="w-6 h-6 text-blue-300"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -318,21 +736,22 @@
                           stroke-linecap="round"
                           stroke-linejoin="round"
                           stroke-width="2"
-                          d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V6a2 2 0 00-2-2"
+                          d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
                         />
                       </svg>
                     </div>
                     <div class="text-white font-semibold">Social Media</div>
                     <div class="text-gray-400 text-sm">Engage More</div>
                   </div>
+
                   <div
-                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-purple-500/50 transition"
+                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-sky-400/40 transition"
                   >
                     <div
-                      class="w-12 h-12 bg-pink-500/20 rounded-lg flex items-center justify-center mb-4"
+                      class="w-12 h-12 bg-indigo-500/15 rounded-lg flex items-center justify-center mb-4"
                     >
                       <svg
-                        class="w-6 h-6 text-pink-400"
+                        class="w-6 h-6 text-indigo-300"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -354,14 +773,15 @@
                     <div class="text-white font-semibold">Ads Campaign</div>
                     <div class="text-gray-400 text-sm">Convert Better</div>
                   </div>
+
                   <div
-                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-purple-500/50 transition"
+                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-sky-400/40 transition"
                   >
                     <div
-                      class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center mb-4"
+                      class="w-12 h-12 bg-cyan-500/15 rounded-lg flex items-center justify-center mb-4"
                     >
                       <svg
-                        class="w-6 h-6 text-green-400"
+                        class="w-6 h-6 text-cyan-300"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -386,10 +806,10 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-16 md:py-24 bg-[#0a0a0f] relative">
+    <section id="services" class="pt-8 pb-10 md:pt-12 md:pb-12 relative">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div class="text-center mb-16">
-          <span class="text-purple-400 font-medium">What We Offer</span>
+        <div class="text-center mb-10 md:mb-12">
+          <span class="text-sky-400 font-medium">What We Offer</span>
           <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mt-3 mb-6">
             Our <span class="gradient-text">Services</span>
           </h2>
@@ -398,13 +818,14 @@
             elevate your brand and drive measurable results.
           </p>
         </div>
+
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <!-- SEO -->
           <div
-            class="service-card card-gradient rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
+            class="service-card card-gradient fx-card rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
           >
             <div
-              class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-2xl flex items-center justify-center mb-6"
+              class="w-16 h-16 bg-gradient-to-br from-sky-500 to-blue-700 rounded-2xl flex items-center justify-center mb-6"
             >
               <svg
                 class="w-8 h-8 text-white"
@@ -428,7 +849,7 @@
             <ul class="space-y-2 text-gray-400 text-sm sm:text-base">
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -442,7 +863,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -456,7 +877,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -470,12 +891,13 @@
               </li>
             </ul>
           </div>
+
           <!-- Social Media -->
           <div
-            class="service-card card-gradient rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
+            class="service-card card-gradient fx-card rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
           >
             <div
-              class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6"
+              class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-700 rounded-2xl flex items-center justify-center mb-6"
             >
               <svg
                 class="w-8 h-8 text-white"
@@ -501,7 +923,7 @@
             <ul class="space-y-2 text-gray-400 text-sm sm:text-base">
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -515,7 +937,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -529,7 +951,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -543,12 +965,13 @@
               </li>
             </ul>
           </div>
+
           <!-- Ads Campaign -->
           <div
-            class="service-card card-gradient rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
+            class="service-card card-gradient fx-card rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
           >
             <div
-              class="w-16 h-16 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mb-6"
+              class="w-16 h-16 bg-gradient-to-br from-indigo-500 to-blue-900 rounded-2xl flex items-center justify-center mb-6"
             >
               <svg
                 class="w-8 h-8 text-white"
@@ -578,7 +1001,7 @@
             <ul class="space-y-2 text-gray-400 text-sm sm:text-base">
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -592,7 +1015,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -606,7 +1029,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -620,12 +1043,13 @@
               </li>
             </ul>
           </div>
+
           <!-- Graphic Design -->
           <div
-            class="service-card card-gradient rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
+            class="service-card card-gradient fx-card rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
           >
             <div
-              class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-6"
+              class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-sky-700 rounded-2xl flex items-center justify-center mb-6"
             >
               <svg
                 class="w-8 h-8 text-white"
@@ -649,7 +1073,7 @@
             <ul class="space-y-2 text-gray-400 text-sm sm:text-base">
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -663,7 +1087,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -677,7 +1101,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -691,12 +1115,13 @@
               </li>
             </ul>
           </div>
+
           <!-- Digital Marketing -->
           <div
-            class="service-card card-gradient rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
+            class="service-card card-gradient fx-card rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
           >
             <div
-              class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-6"
+              class="w-16 h-16 bg-gradient-to-br from-sky-600 to-indigo-900 rounded-2xl flex items-center justify-center mb-6"
             >
               <svg
                 class="w-8 h-8 text-white"
@@ -722,7 +1147,7 @@
             <ul class="space-y-2 text-gray-400 text-sm sm:text-base">
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -736,7 +1161,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -750,7 +1175,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -764,12 +1189,13 @@
               </li>
             </ul>
           </div>
+
           <!-- Content Marketing -->
           <div
-            class="service-card card-gradient rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
+            class="service-card card-gradient fx-card rounded-2xl p-6 md:p-8 border border-white/10 transition-all duration-300"
           >
             <div
-              class="w-16 h-16 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6"
+              class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl flex items-center justify-center mb-6"
             >
               <svg
                 class="w-8 h-8 text-white"
@@ -795,7 +1221,7 @@
             <ul class="space-y-2 text-gray-400 text-sm sm:text-base">
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -809,7 +1235,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -823,7 +1249,7 @@
               </li>
               <li class="flex items-center gap-2">
                 <svg
-                  class="w-5 h-5 text-green-400"
+                  class="w-5 h-5 text-sky-400"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                 >
@@ -844,16 +1270,16 @@
     <!-- About Section -->
     <section
       id="about"
-      class="py-16 md:py-24 bg-gradient-to-b from-[#0a0a0f] to-[#0f0f1a]"
+      class="pt-10 pb-8 md:pt-12 md:pb-10 bg-gradient-to-b from-[#05070f] to-[#070b17]"
     >
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div class="relative">
             <div
-              class="absolute -inset-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur-2xl opacity-20"
+              class="absolute -inset-4 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-800 rounded-3xl blur-2xl opacity-20"
             ></div>
             <div
-              class="relative bg-gradient-to-br from-white/10 to-white/5 rounded-3xl p-8 border border-white/10"
+              class="fx-card relative bg-gradient-to-br from-white/10 to-white/5 rounded-3xl p-8 border border-white/10"
             >
               <div class="grid grid-cols-2 gap-6">
                 <div class="bg-white/5 rounded-2xl p-6 text-center">
@@ -891,8 +1317,9 @@
               </div>
             </div>
           </div>
+
           <div>
-            <span class="text-purple-400 font-medium">About Us</span>
+            <span class="text-sky-400 font-medium">About Us</span>
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mt-3 mb-6">
               We Are <span class="gradient-text">Digihood Studio</span>
             </h2>
@@ -909,13 +1336,14 @@
               growth. Every strategy, every campaign, and every design we create
               is a building block towards your success.
             </p>
-            <div class="space-y-4 mb-8">
+
+            <div class="space-y-4 mb-6">
               <div class="flex items-start gap-4">
                 <div
-                  class="w-12 h-12 bg-indigo-500/20 rounded-xl flex items-center justify-center"
+                  class="w-12 h-12 bg-sky-500/15 rounded-xl flex items-center justify-center"
                 >
                   <svg
-                    class="w-6 h-6 text-indigo-400"
+                    class="w-6 h-6 text-sky-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -937,12 +1365,13 @@
                   </div>
                 </div>
               </div>
+
               <div class="flex items-start gap-4">
                 <div
-                  class="w-12 h-12 bg-purple-500/20 rounded-xl flex items-center justify-center"
+                  class="w-12 h-12 bg-blue-500/15 rounded-xl flex items-center justify-center"
                 >
                   <svg
-                    class="w-6 h-6 text-purple-400"
+                    class="w-6 h-6 text-blue-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -964,12 +1393,13 @@
                   </div>
                 </div>
               </div>
+
               <div class="flex items-start gap-4">
                 <div
-                  class="w-12 h-12 bg-pink-500/20 rounded-xl flex items-center justify-center"
+                  class="w-12 h-12 bg-indigo-500/15 rounded-xl flex items-center justify-center"
                 >
                   <svg
-                    class="w-6 h-6 text-pink-400"
+                    class="w-6 h-6 text-indigo-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -998,11 +1428,11 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 md:py-24 bg-[#0a0a0f]">
+    <section id="contact" class="pt-8 pb-10 md:pt-10 md:pb-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="grid lg:grid-cols-2 gap-10 lg:gap-16">
           <div>
-            <span class="text-purple-400 font-medium">Get In Touch</span>
+            <span class="text-sky-400 font-medium">Get In Touch</span>
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mt-3 mb-6">
               Let's Build Something
               <span class="gradient-text">Great Together</span>
@@ -1016,10 +1446,10 @@
             <div class="space-y-6">
               <div class="flex items-center gap-4">
                 <div
-                  class="w-14 h-14 bg-indigo-500/20 rounded-2xl flex items-center justify-center"
+                  class="w-14 h-14 bg-sky-500/15 rounded-2xl flex items-center justify-center"
                 >
                   <svg
-                    class="w-6 h-6 text-indigo-400"
+                    class="w-6 h-6 text-sky-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1043,12 +1473,13 @@
                   <div class="text-gray-400 text-sm">Kathmandu, Nepal</div>
                 </div>
               </div>
+
               <div class="flex items-center gap-4">
                 <div
-                  class="w-14 h-14 bg-purple-500/20 rounded-2xl flex items-center justify-center"
+                  class="w-14 h-14 bg-blue-500/15 rounded-2xl flex items-center justify-center"
                 >
                   <svg
-                    class="w-6 h-6 text-purple-400"
+                    class="w-6 h-6 text-blue-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1068,12 +1499,13 @@
                   </div>
                 </div>
               </div>
+
               <div class="flex items-center gap-4">
                 <div
-                  class="w-14 h-14 bg-pink-500/20 rounded-2xl flex items-center justify-center"
+                  class="w-14 h-14 bg-indigo-500/15 rounded-2xl flex items-center justify-center"
                 >
                   <svg
-                    class="w-6 h-6 text-pink-400"
+                    class="w-6 h-6 text-indigo-300"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -1093,12 +1525,12 @@
               </div>
             </div>
 
-            <div class="mt-10">
+            <div class="mt-8">
               <div class="font-semibold mb-4">Follow Us</div>
               <div class="flex gap-4">
                 <a
                   href="#"
-                  class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-indigo-500/20 hover:border-indigo-500/50 transition"
+                  class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-sky-500/10 hover:border-sky-400/40 transition"
                 >
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -1108,7 +1540,7 @@
                 </a>
                 <a
                   href="#"
-                  class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-pink-500/20 hover:border-pink-500/50 transition"
+                  class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-sky-500/10 hover:border-sky-400/40 transition"
                 >
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -1118,7 +1550,7 @@
                 </a>
                 <a
                   href="#"
-                  class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-blue-500/20 hover:border-blue-500/50 transition"
+                  class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-sky-500/10 hover:border-sky-400/40 transition"
                 >
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -1128,7 +1560,7 @@
                 </a>
                 <a
                   href="#"
-                  class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-red-500/20 hover:border-red-500/50 transition"
+                  class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center hover:bg-sky-500/10 hover:border-sky-400/40 transition"
                 >
                   <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path
@@ -1141,7 +1573,7 @@
           </div>
 
           <div
-            class="card-gradient rounded-3xl p-6 sm:p-8 md:p-10 border border-white/10"
+            class="card-gradient fx-card rounded-3xl p-6 sm:p-8 md:p-10 border border-white/10"
           >
             <h3 class="text-xl md:text-2xl font-bold mb-6">
               Send Us a Message
@@ -1150,33 +1582,34 @@
               <div class="grid md:grid-cols-2 gap-6">
                 <div>
                   <label class="block text-sm font-medium mb-2"
-                    >Your Name</label
+                    >Full Name</label
                   >
                   <input
                     type="text"
-                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition"
-                    placeholder="John Doe"
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-400/60 transition"
+                    placeholder="Your name"
                     required
                   />
                 </div>
                 <div>
                   <label class="block text-sm font-medium mb-2"
-                    >Your Email</label
+                    >Email Address</label
                   >
                   <input
                     type="email"
-                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition"
-                    placeholder="john@example.com"
+                    class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-400/60 transition"
+                    placeholder="Your email"
                     required
                   />
                 </div>
               </div>
+
               <div>
                 <label class="block text-sm font-medium mb-2"
                   >Service Interested In</label
                 >
                 <select
-                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition"
+                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-400/60 transition"
                 >
                   <option value="" class="bg-gray-900">Select a service</option>
                   <option value="seo" class="bg-gray-900">
@@ -1194,20 +1627,22 @@
                   </option>
                 </select>
               </div>
+
               <div>
                 <label class="block text-sm font-medium mb-2"
                   >Your Message</label
                 >
                 <textarea
                   rows="5"
-                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-500 transition resize-none"
+                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-400/60 transition resize-none"
                   placeholder="Tell us about your project..."
                   required
                 ></textarea>
               </div>
+
               <button
                 type="submit"
-                class="w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition flex items-center justify-center gap-2"
+                class="btn-primary cursor-pointer w-full px-8 py-4 rounded-xl font-semibold transition flex items-center justify-center gap-2"
               >
                 Send Message
                 <svg
@@ -1231,19 +1666,28 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-[#0f0f1a] border-t border-white/10 py-10 md:py-12">
+    <footer class="bg-[#070b17] border-t border-white/10 py-7 md:py-8">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
-        <div class="grid md:grid-cols-4 gap-8 md:gap-12 mb-12">
+        <div class="grid md:grid-cols-4 gap-8 md:gap-12">
           <div class="md:col-span-2">
-            <a href="#" class="flex items-center gap-3 mb-4">
+            <a href="/" data-route="/home" class="flex items-center gap-3 mb-4">
               <div
-                class="w-10 h-10 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center font-bold text-lg"
+                class="brand-badge w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg overflow-hidden select-none"
+                title='Put your logo file named "digilogo.png" next to index.html'
               >
-                D
+                <img
+                  class="company-logo w-full h-full object-contain p-1.5"
+                  src="digilogo.png"
+                  alt="Company logo"
+                  onerror="this.classList.add('hidden'); this.parentElement.querySelector('.logo-fallback').classList.remove('hidden');"
+                />
+                <span class="logo-fallback hidden">D</span>
               </div>
               <div>
-                <span class="text-lg sm:text-xl font-bold">Digihood</span>
-                <span class="text-lg sm:text-xl font-light text-purple-400"
+                <span class="text-lg sm:text-xl font-bold font-display"
+                  >Digihood</span
+                >
+                <span class="text-lg sm:text-xl font-light text-sky-400"
                   >Studio</span
                 >
               </div>
@@ -1256,74 +1700,84 @@
               © 2026 Digihood Studio. All rights reserved.
             </div>
           </div>
+
           <div>
             <h4 class="font-semibold mb-4">Quick Links</h4>
             <ul class="space-y-2 text-sm sm:text-base">
               <li>
                 <a
-                  href="#home"
+                  href="/home"
+                  data-route="/home"
                   class="text-gray-400 hover:text-white transition"
                   >Home</a
                 >
               </li>
               <li>
                 <a
-                  href="#services"
+                  href="/services"
+                  data-route="/services"
                   class="text-gray-400 hover:text-white transition"
                   >Services</a
                 >
               </li>
               <li>
                 <a
-                  href="#about"
+                  href="/about"
+                  data-route="/about"
                   class="text-gray-400 hover:text-white transition"
                   >About Us</a
                 >
               </li>
-
               <li>
                 <a
-                  href="#contact"
+                  href="/contact"
+                  data-route="/contact"
                   class="text-gray-400 hover:text-white transition"
                   >Contact</a
                 >
               </li>
             </ul>
           </div>
+
           <div>
             <h4 class="font-semibold mb-4">Services</h4>
             <ul class="space-y-2 text-sm sm:text-base">
               <li>
                 <a
-                  href="#services"
+                  href="/services"
+                  data-route="/services"
                   class="text-gray-400 hover:text-white transition"
                   >SEO Optimization</a
                 >
               </li>
               <li>
                 <a
-                  href="#services"
+                  href="/services"
+                  data-route="/services"
                   class="text-gray-400 hover:text-white transition"
                   >Social Media</a
                 >
               </li>
               <li>
                 <a
-                  href="#services"
+                  href="/services"
+                  data-route="/services"
                   class="text-gray-400 hover:text-white transition"
                   >Ads Campaign</a
                 >
               </li>
               <li>
                 <a
-                  href="#services"
+                  href="/services"
+                  data-route="/services"
                   class="text-gray-400 hover:text-white transition"
                   >Graphic Design</a
                 >
               </li>
               <li>
                 <a
-                  href="#services"
+                  href="/services"
+                  data-route="/services"
                   class="text-gray-400 hover:text-white transition"
                   >Digital Marketing</a
                 >
@@ -1334,10 +1788,38 @@
       </div>
     </footer>
 
+    <!-- Back to top -->
+    <button
+      id="toTop"
+      class="fixed bottom-6 right-6 z-50 hidden md:flex items-center gap-2 px-4 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-lg hover:bg-white/8 transition"
+      aria-label="Back to top"
+      type="button"
+    >
+      <span class="text-sm font-medium">Top</span>
+      <svg
+        class="w-4 h-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 15l7-7 7 7"
+        />
+      </svg>
+    </button>
+
     <script>
+      // ----------------------------
       // Mobile Menu Toggle
+      // ----------------------------
       const menuBtn = document.getElementById("menuBtn");
       const mobileMenu = document.getElementById("mobileMenu");
+      const navbar = document.getElementById("navbar");
+      const scrollProgress = document.getElementById("scrollProgress");
+      const toTop = document.getElementById("toTop");
 
       menuBtn.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
@@ -1350,27 +1832,9 @@
         });
       });
 
-      // Navbar background on scroll
-      const navbar = document.getElementById("navbar");
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add(
-            "bg-[#0a0a0f]/90",
-            "backdrop-blur-lg",
-            "border-b",
-            "border-white/10"
-          );
-        } else {
-          navbar.classList.remove(
-            "bg-[#0a0a0f]/90",
-            "backdrop-blur-lg",
-            "border-b",
-            "border-white/10"
-          );
-        }
-      });
-
+      // ----------------------------
       // Form submission
+      // ----------------------------
       const contactForm = document.getElementById("contactForm");
       contactForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -1378,29 +1842,374 @@
         contactForm.reset();
       });
 
-      // Animate elements on scroll
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
+      // ----------------------------
+      // Hashless SPA routing (/home, /services, ...)
+      // ----------------------------
+      const ROUTE_TO_SECTION = {
+        "/": "home",
+        "/home": "home",
+        "/services": "services",
+        "/about": "about",
+        "/contact": "contact",
       };
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-          }
-        });
-      }, observerOptions);
+      const SECTION_TO_ROUTE = {
+        home: "/home",
+        services: "/services",
+        about: "/about",
+        contact: "/contact",
+      };
 
-      document
-        .querySelectorAll(".service-card, .card-gradient")
-        .forEach((el) => {
-          el.style.opacity = "0";
-          el.style.transform = "translateY(30px)";
-          el.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-          observer.observe(el);
+      function normalizePath(pathname) {
+        try {
+          pathname = decodeURIComponent(pathname || "/");
+        } catch {
+          // ignore
+        }
+        if (!pathname.startsWith("/")) pathname = "/" + pathname;
+        if (pathname.length > 1 && pathname.endsWith("/")) {
+          pathname = pathname.slice(0, -1);
+        }
+        return pathname;
+      }
+
+      function scrollToSection(sectionId, behavior = "smooth") {
+        const el = document.getElementById(sectionId);
+        if (!el) return;
+
+        const navH = navbar ? navbar.getBoundingClientRect().height : 0;
+        const y = el.getBoundingClientRect().top + window.pageYOffset - navH;
+        window.scrollTo({ top: Math.max(y, 0), behavior });
+      }
+
+      function setActiveNav(routePath) {
+        const norm = normalizePath(routePath);
+        const sectionId = ROUTE_TO_SECTION[norm];
+
+        document.querySelectorAll("a.nav-link[data-route]").forEach((a) => {
+          const aRoute = normalizePath(
+            a.getAttribute("data-route") || a.getAttribute("href") || ""
+          );
+          const active = aRoute === SECTION_TO_ROUTE[sectionId];
+
+          a.classList.toggle("text-white", active);
+          if (a.classList.contains("text-gray-300")) {
+            a.classList.toggle("text-gray-300", !active);
+          }
+
+          a.classList.toggle("nav-active", active);
         });
+      }
+
+      function navigate(routePath, { replace = false, scroll = true } = {}) {
+        const norm = normalizePath(routePath);
+        const sectionId = ROUTE_TO_SECTION[norm];
+
+        if (!sectionId) {
+          if (scroll) scrollToSection("home", "smooth");
+          return;
+        }
+
+        if (replace) {
+          history.replaceState({ route: norm }, "", norm);
+        } else {
+          history.pushState({ route: norm }, "", norm);
+        }
+
+        setActiveNav(norm);
+        if (scroll) scrollToSection(sectionId, "smooth");
+      }
+
+      function handleInitialRoute() {
+        const path = normalizePath(window.location.pathname);
+        const sectionId = ROUTE_TO_SECTION[path] || "home";
+
+        if (path === "/") {
+          history.replaceState({ route: "/home" }, "", "/home");
+        }
+
+        setActiveNav(SECTION_TO_ROUTE[sectionId] || "/home");
+        scrollToSection(sectionId, "auto");
+      }
+
+      // Intercept internal route links
+      document.addEventListener("click", (e) => {
+        const a = e.target.closest("a");
+        if (!a) return;
+
+        const href = a.getAttribute("href") || "";
+        const route = a.getAttribute("data-route") || href;
+
+        if (
+          href.startsWith("http") ||
+          href.startsWith("mailto:") ||
+          href.startsWith("tel:") ||
+          href.startsWith("#")
+        ) {
+          return;
+        }
+
+        const norm = normalizePath(route);
+        if (ROUTE_TO_SECTION[norm]) {
+          e.preventDefault();
+          navigate(norm);
+          mobileMenu.classList.add("hidden");
+        }
+      });
+
+      window.addEventListener("popstate", () => {
+        const path = normalizePath(window.location.pathname);
+        const sectionId = ROUTE_TO_SECTION[path] || "home";
+        setActiveNav(path);
+        scrollToSection(sectionId, "smooth");
+      });
+
+      // ----------------------------
+      // Scroll spy + UI (progress, navbar chrome, back-to-top)
+      // ----------------------------
+      const SECTION_IDS = ["home", "services", "about", "contact"];
+      let spyTicking = false;
+      let lastSpySection = null;
+      let isProgrammaticScroll = false;
+      let programmaticScrollTimer = null;
+
+      function markProgrammaticScroll() {
+        isProgrammaticScroll = true;
+        clearTimeout(programmaticScrollTimer);
+        programmaticScrollTimer = setTimeout(() => {
+          isProgrammaticScroll = false;
+        }, 650);
+      }
+
+      const _scrollToSection = scrollToSection;
+      scrollToSection = function (sectionId, behavior = "smooth") {
+        markProgrammaticScroll();
+        _scrollToSection(sectionId, behavior);
+      };
+
+      function getActiveSectionId() {
+        const navH = navbar ? navbar.getBoundingClientRect().height : 0;
+        const probeY = window.scrollY + navH + 40;
+
+        let active = "home";
+        for (const id of SECTION_IDS) {
+          const el = document.getElementById(id);
+          if (!el) continue;
+          const top = el.offsetTop;
+          if (top <= probeY) active = id;
+        }
+        return active;
+      }
+
+      function updateProgress() {
+        if (!scrollProgress) return;
+        const docH = document.documentElement.scrollHeight;
+        const winH = window.innerHeight;
+        const max = Math.max(docH - winH, 1);
+        const pct = Math.min(1, Math.max(0, window.scrollY / max));
+        scrollProgress.style.width = (pct * 100).toFixed(2) + "%";
+      }
+
+      function updateNavbarChrome() {
+        const scrolled = window.scrollY > 50;
+        navbar.classList.toggle("bg-[#05070f]/85", scrolled);
+        navbar.classList.toggle("backdrop-blur-lg", scrolled);
+        navbar.classList.toggle("border-b", scrolled);
+        navbar.classList.toggle("border-white/10", scrolled);
+      }
+
+      function updateToTop() {
+        if (!toTop) return;
+        // Show only after leaving the top area
+        const show = window.scrollY > 140;
+        toTop.classList.toggle("hidden", !show);
+      }
+
+      function updateSpy() {
+        spyTicking = false;
+
+        updateNavbarChrome();
+        updateProgress();
+        updateToTop();
+
+        const activeId = getActiveSectionId();
+        if (activeId !== lastSpySection) {
+          lastSpySection = activeId;
+          const route = SECTION_TO_ROUTE[activeId] || "/home";
+
+          setActiveNav(route);
+
+          if (!isProgrammaticScroll) {
+            const current = normalizePath(window.location.pathname);
+            if (current !== route) {
+              history.replaceState({ route }, "", route);
+            }
+          }
+        }
+      }
+
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (!spyTicking) {
+            spyTicking = true;
+            requestAnimationFrame(updateSpy);
+          }
+        },
+        { passive: true }
+      );
+
+      // Back-to-top uses router
+      toTop?.addEventListener("click", () => navigate("/home"));
+
+      // ----------------------------
+      // Reveal + 3D Tilt
+      // ----------------------------
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      const tiltCapable =
+        !prefersReducedMotion &&
+        window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+      const fxTargets = Array.from(
+        document.querySelectorAll(".fx-card, .service-card, .card-gradient")
+      );
+
+      // Ensure everything uses the unified FX class
+      fxTargets.forEach((el) => el.classList.add("fx-card"));
+
+      const revealObserverOptions = {
+        threshold: 0.12,
+        rootMargin: "0px 0px -70px 0px",
+      };
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+
+          const el = entry.target;
+          el.classList.add("is-visible");
+
+          // After reveal is done, make it "live" (snappier interactions)
+          if (!prefersReducedMotion) {
+            setTimeout(() => el.classList.add("fx-live"), 760);
+          } else {
+            el.classList.add("fx-live");
+          }
+
+          revealObserver.unobserve(el);
+        }
+      }, revealObserverOptions);
+
+      fxTargets.forEach((el) => {
+        if (prefersReducedMotion) {
+          el.classList.add("is-visible", "fx-live");
+          return;
+        }
+        revealObserver.observe(el);
+      });
+
+      function initTilt(el) {
+        let raf = null;
+
+        const onMove = (e) => {
+          if (e.pointerType && e.pointerType !== "mouse") return;
+
+          const rect = el.getBoundingClientRect();
+          if (!rect.width || !rect.height) return;
+
+          const x = (e.clientX - rect.left) / rect.width;
+          const y = (e.clientY - rect.top) / rect.height;
+
+          const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
+          const cx = clamp(x, 0, 1);
+          const cy = clamp(y, 0, 1);
+
+          const maxDeg = 7.5;
+          const tiltY = (cx - 0.5) * (maxDeg * 2);
+          const tiltX = -(cy - 0.5) * (maxDeg * 2);
+
+          if (raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            el.style.setProperty("--tiltX", tiltX.toFixed(2) + "deg");
+            el.style.setProperty("--tiltY", tiltY.toFixed(2) + "deg");
+            el.style.setProperty("--mx", (cx * 100).toFixed(2) + "%");
+            el.style.setProperty("--my", (cy * 100).toFixed(2) + "%");
+            el.style.setProperty("--shine", "1");
+          });
+        };
+
+        const reset = () => {
+          if (raf) cancelAnimationFrame(raf);
+          el.style.setProperty("--tiltX", "0deg");
+          el.style.setProperty("--tiltY", "0deg");
+          el.style.setProperty("--shine", "0");
+          el.style.setProperty("--press", "1");
+        };
+
+        el.addEventListener("pointermove", onMove);
+        el.addEventListener("pointerleave", reset);
+        el.addEventListener("pointerdown", (e) => {
+          if (e.pointerType && e.pointerType !== "mouse") return;
+          el.style.setProperty("--press", "0.985");
+        });
+        el.addEventListener("pointerup", reset);
+      }
+
+      if (tiltCapable) {
+        fxTargets.forEach(initTilt);
+      }
+
+      // ----------------------------
+      // Ambient cursor-driven background
+      // ----------------------------
+      if (
+        !prefersReducedMotion &&
+        window.matchMedia("(hover: hover) and (pointer: fine)").matches
+      ) {
+        let bgRaf = null;
+
+        window.addEventListener(
+          "pointermove",
+          (e) => {
+            if (e.pointerType && e.pointerType !== "mouse") return;
+            if (bgRaf) cancelAnimationFrame(bgRaf);
+            bgRaf = requestAnimationFrame(() => {
+              const x = (e.clientX / window.innerWidth) * 100;
+              const y = (e.clientY / window.innerHeight) * 100;
+              document.documentElement.style.setProperty(
+                "--cursorX",
+                x.toFixed(2) + "%"
+              );
+              document.documentElement.style.setProperty(
+                "--cursorY",
+                y.toFixed(2) + "%"
+              );
+              document.documentElement.style.setProperty(
+                "--cursorX2",
+                (100 - x).toFixed(2) + "%"
+              );
+              document.documentElement.style.setProperty(
+                "--cursorY2",
+                Math.min(95, y + 10).toFixed(2) + "%"
+              );
+            });
+          },
+          { passive: true }
+        );
+      }
+
+      // Init
+      window.addEventListener("DOMContentLoaded", () => {
+        handleInitialRoute();
+        // Ensure UI elements (Top button/progress/nav chrome) are correct immediately.
+        updateToTop();
+        updateProgress();
+        updateNavbarChrome();
+        requestAnimationFrame(updateSpy);
+      });
     </script>
   </body>
 </html>
