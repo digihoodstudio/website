@@ -170,6 +170,21 @@
         filter: brightness(1.06);
       }
 
+      /* Form select placeholder (grey + unselectable) */
+      .select-field {
+        color: rgba(229, 231, 235, 1); /* text-gray-200 */
+      }
+      .select-field:invalid {
+        color: rgba(156, 163, 175, 1); /* text-gray-400 */
+      }
+      .select-field option {
+        color: rgba(229, 231, 235, 1);
+        background-color: #070b17;
+      }
+      .select-field option[disabled] {
+        color: rgba(156, 163, 175, 1);
+      }
+
       .brand-badge {
         background: linear-gradient(
           135deg,
@@ -207,6 +222,335 @@
 
       .glow {
         box-shadow: 0 0 70px rgba(37, 99, 235, 0.25);
+      }
+
+      /* ----------------------------
+         Hero visual: 3D building blocks + Rubik cube
+         (pure CSS transforms, continuous + subtle)
+         ---------------------------- */
+      .hero-visual {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 320px;
+        overflow: hidden;
+        background: radial-gradient(
+          900px circle at 40% 35%,
+          rgba(56, 189, 248, 0.08),
+          transparent 55%
+        );
+      }
+
+      /* Canvas hero visual (reliable locally, no dependencies) */
+      .hero-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .hero-visual::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(
+            600px circle at 20% 30%,
+            rgba(56, 189, 248, 0.18),
+            transparent 55%
+          ),
+          radial-gradient(
+            520px circle at 85% 55%,
+            rgba(37, 99, 235, 0.18),
+            transparent 60%
+          );
+        opacity: 0.9;
+      }
+
+      .hero-visual-scene {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        perspective: 1400px;
+        transform: translateZ(0);
+      }
+
+      /* Slight responsive scale for the 3D scene */
+      @media (max-width: 1280px) {
+        .staircase {
+          transform: translate3d(-170px, 120px, -150px) scale(0.92);
+        }
+        .rubik {
+          --cs: 82px;
+        }
+      }
+
+      .iso-base {
+        transform-style: preserve-3d;
+        transform: rotateX(58deg) rotateZ(45deg);
+        will-change: transform;
+      }
+
+      .iso-anim {
+        position: relative;
+        transform-style: preserve-3d;
+        animation: isoDrift 7.2s ease-in-out infinite;
+      }
+
+      @keyframes isoDrift {
+        0%,
+        100% {
+          transform: translateY(0px) rotateY(-8deg);
+        }
+        50% {
+          transform: translateY(-10px) rotateY(8deg);
+        }
+      }
+
+      .staircase {
+        position: relative;
+        width: 560px;
+        height: 560px;
+        transform-style: preserve-3d;
+        /* Default placement: keep centered so it can't disappear off-canvas */
+        transform: translate3d(0px, 140px, -150px);
+      }
+
+      /* Mobile/tablet: center the scene so it’s always visible */
+      @media (max-width: 1023px) {
+        .staircase {
+          transform: translate3d(0px, 150px, -140px) scale(0.78);
+        }
+        .hero-visual-caption {
+          left: 12px;
+          right: 12px;
+          max-width: none;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .staircase {
+          transform: translate3d(0px, 160px, -140px) scale(0.68);
+        }
+      }
+
+      .cube {
+        --sz: 62px;
+        position: absolute;
+        width: var(--sz);
+        height: var(--sz);
+        transform-style: preserve-3d;
+        transform: translate3d(var(--x), var(--y), var(--z));
+        will-change: transform;
+      }
+
+      .cube.step {
+        animation: stepBob 6.8s ease-in-out infinite;
+        animation-delay: calc(var(--i) * -0.35s);
+      }
+
+      @keyframes stepBob {
+        0%,
+        100% {
+          transform: translate3d(var(--x), var(--y), var(--z)) translateY(0px);
+        }
+        50% {
+          transform: translate3d(var(--x), var(--y), var(--z)) translateY(-6px);
+        }
+      }
+
+      .cube .face {
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backface-visibility: hidden;
+      }
+
+      .cube .front {
+        transform: translateZ(calc(var(--sz) / 2));
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.03)
+        );
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      .cube .right {
+        transform: rotateY(90deg) translateZ(calc(var(--sz) / 2));
+        background: linear-gradient(
+          180deg,
+          rgba(37, 99, 235, 0.24),
+          rgba(30, 64, 175, 0.1)
+        );
+      }
+
+      .cube .top {
+        transform: rotateX(90deg) translateZ(calc(var(--sz) / 2));
+        background: linear-gradient(
+          180deg,
+          rgba(56, 189, 248, 0.22),
+          rgba(255, 255, 255, 0.06)
+        );
+      }
+
+      .cube .face::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: radial-gradient(
+          120px circle at 30% 25%,
+          rgba(255, 255, 255, 0.14),
+          transparent 60%
+        );
+        opacity: 0.8;
+      }
+
+      .runner {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 9999px;
+        transform-style: preserve-3d;
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(255, 255, 255, 0.95),
+          rgba(56, 189, 248, 0.95) 24%,
+          rgba(56, 189, 248, 0) 70%
+        );
+        box-shadow: 0 0 30px rgba(56, 189, 248, 0.55),
+          0 0 70px rgba(37, 99, 235, 0.35);
+        animation: runnerClimb 5.6s linear infinite;
+        will-change: transform;
+      }
+
+      @keyframes runnerClimb {
+        0% {
+          transform: translate3d(28px, -24px, 58px);
+        }
+        16% {
+          transform: translate3d(92px, -24px, 102px);
+        }
+        32% {
+          transform: translate3d(156px, -24px, 146px);
+        }
+        48% {
+          transform: translate3d(220px, -24px, 190px);
+        }
+        64% {
+          transform: translate3d(284px, -24px, 234px);
+        }
+        80% {
+          transform: translate3d(348px, -24px, 278px);
+        }
+        100% {
+          transform: translate3d(28px, -24px, 58px);
+        }
+      }
+
+      .rubik-wrap {
+        position: absolute;
+        transform-style: preserve-3d;
+        transform: translate3d(var(--x), var(--y), var(--z));
+        filter: drop-shadow(0 24px 28px rgba(0, 0, 0, 0.45));
+      }
+
+      .rubik {
+        --cs: 90px;
+        --half: calc(var(--cs) / 2);
+        position: relative;
+        width: var(--cs);
+        height: var(--cs);
+        transform-style: preserve-3d;
+        animation: rubikSpin 10.5s linear infinite;
+        will-change: transform;
+      }
+
+      @keyframes rubikSpin {
+        0% {
+          transform: rotateX(25deg) rotateY(25deg);
+        }
+        50% {
+          transform: rotateX(65deg) rotateY(205deg);
+        }
+        100% {
+          transform: rotateX(25deg) rotateY(385deg);
+        }
+      }
+
+      .rubik .rface {
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(var(--c), var(--c)),
+          repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.55) 0 2px,
+            transparent 2px 30px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.55) 0 2px,
+            transparent 2px 30px
+          ),
+          radial-gradient(
+            120px circle at 25% 20%,
+            rgba(255, 255, 255, 0.22),
+            transparent 58%
+          );
+        background-blend-mode: overlay, normal, normal, screen;
+        backface-visibility: hidden;
+      }
+
+      .rubik .front {
+        --c: rgba(56, 189, 248, 0.95);
+        transform: translateZ(var(--half));
+      }
+      .rubik .back {
+        --c: rgba(30, 64, 175, 0.65);
+        transform: rotateY(180deg) translateZ(var(--half));
+      }
+      .rubik .right {
+        --c: rgba(37, 99, 235, 0.95);
+        transform: rotateY(90deg) translateZ(var(--half));
+      }
+      .rubik .left {
+        --c: rgba(14, 165, 233, 0.65);
+        transform: rotateY(-90deg) translateZ(var(--half));
+      }
+      .rubik .top {
+        --c: rgba(255, 255, 255, 0.1);
+        transform: rotateX(90deg) translateZ(var(--half));
+      }
+      .rubik .bottom {
+        --c: rgba(5, 7, 15, 0.95);
+        transform: rotateX(-90deg) translateZ(var(--half));
+      }
+
+      .hero-visual-caption {
+        position: absolute;
+        left: 18px;
+        bottom: 16px;
+        z-index: 2;
+        max-width: 260px;
+        background: rgba(5, 7, 15, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 10px 12px;
+        backdrop-filter: blur(12px);
+      }
+
+      .hero-visual-caption .kicker {
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(148, 163, 184, 1);
       }
 
       /*
@@ -358,24 +702,25 @@
         position: absolute;
         inset: -2px;
         border-radius: inherit;
-        padding: 2px;
-        background: linear-gradient(
-          135deg,
-          var(--a1) 0%,
-          var(--a2) 45%,
-          var(--a3) 70%,
-          var(--a1) 100%
-        );
-        background-size: 300% 300%;
+        border: 2px solid transparent;
+
+        /* Gradient border without masks (avoids editor warnings, keeps radius support) */
+        background: linear-gradient(rgba(5, 7, 15, 0.9), rgba(5, 7, 15, 0.9))
+            padding-box,
+          linear-gradient(
+              135deg,
+              var(--a1) 0%,
+              var(--a2) 45%,
+              var(--a3) 70%,
+              var(--a1) 100%
+            )
+            border-box;
+        background-size: 100% 100%, 300% 300%;
+
         opacity: 0;
         transition: opacity 250ms ease;
         pointer-events: none;
         z-index: -1;
-
-        -webkit-mask: linear-gradient(#000 0 0) content-box,
-          linear-gradient(#000 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
       }
 
       .nav-link:hover::before {
@@ -432,7 +777,10 @@
         .gradient-text,
         #scrollProgress,
         .nav-link.nav-active::before,
-        .service-card.fx-live {
+        .service-card.fx-live,
+        .iso-anim,
+        .rubik,
+        .runner {
           animation: none !important;
         }
         .fx-card {
@@ -687,115 +1035,36 @@
             </div>
           </div>
 
-          <div class="relative hidden lg:block">
-            <div class="relative w-full h-[500px]">
+          <div class="relative mt-10 lg:mt-0 min-h-[340px]">
+            <div
+              class="relative w-full h-[340px] sm:h-[380px] md:h-[440px] lg:h-[500px]"
+            >
               <div
                 class="absolute inset-0 bg-gradient-to-br from-sky-500/15 via-blue-500/15 to-indigo-500/15 rounded-3xl glow"
               ></div>
+
               <div
-                class="absolute inset-4 card-gradient fx-card backdrop-blur-sm rounded-2xl border border-white/10 p-8 flex items-center justify-center"
+                class="absolute inset-3 sm:inset-4 card-gradient fx-card is-visible fx-live no-tilt backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden"
               >
-                <div class="grid grid-cols-2 gap-4 w-full">
+                <div class="hero-visual">
+                  <canvas
+                    id="heroCanvas"
+                    class="hero-canvas"
+                    aria-hidden="true"
+                  ></canvas>
                   <div
-                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-sky-400/40 transition"
+                    id="heroCanvasFallback"
+                    style="display: none"
+                    class="absolute inset-0 items-center justify-center text-sm text-slate-300/80"
                   >
-                    <div
-                      class="w-12 h-12 bg-sky-500/15 rounded-lg flex items-center justify-center mb-4"
-                    >
-                      <svg
-                        class="w-6 h-6 text-sky-300"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                      </svg>
-                    </div>
-                    <div class="text-white font-semibold">SEO</div>
-                    <div class="text-gray-400 text-sm">Rank Higher</div>
+                    Visual loading…
                   </div>
 
-                  <div
-                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-sky-400/40 transition"
-                  >
-                    <div
-                      class="w-12 h-12 bg-blue-500/15 rounded-lg flex items-center justify-center mb-4"
-                    >
-                      <svg
-                        class="w-6 h-6 text-blue-300"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
-                        />
-                      </svg>
+                  <div class="hero-visual-caption">
+                    <div class="kicker">Building Blocks</div>
+                    <div class="text-sm text-gray-300 leading-snug">
+                      A continuous climb: strong foundations, consistent growth.
                     </div>
-                    <div class="text-white font-semibold">Social Media</div>
-                    <div class="text-gray-400 text-sm">Engage More</div>
-                  </div>
-
-                  <div
-                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-sky-400/40 transition"
-                  >
-                    <div
-                      class="w-12 h-12 bg-indigo-500/15 rounded-lg flex items-center justify-center mb-4"
-                    >
-                      <svg
-                        class="w-6 h-6 text-indigo-300"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
-                        />
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
-                        />
-                      </svg>
-                    </div>
-                    <div class="text-white font-semibold">Ads Campaign</div>
-                    <div class="text-gray-400 text-sm">Convert Better</div>
-                  </div>
-
-                  <div
-                    class="bg-white/5 rounded-xl p-6 border border-white/10 hover:border-sky-400/40 transition"
-                  >
-                    <div
-                      class="w-12 h-12 bg-cyan-500/15 rounded-lg flex items-center justify-center mb-4"
-                    >
-                      <svg
-                        class="w-6 h-6 text-cyan-300"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </div>
-                    <div class="text-white font-semibold">Design</div>
-                    <div class="text-gray-400 text-sm">Stand Out</div>
                   </div>
                 </div>
               </div>
@@ -1375,12 +1644,33 @@
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
                       stroke-width="2"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                      d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"
+                    />
+                    <circle
+                      cx="9"
+                      cy="7"
+                      r="4"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M23 21v-2a4 4 0 00-3-3.87"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M16 3.13a4 4 0 010 7.75"
                     />
                   </svg>
                 </div>
@@ -1608,24 +1898,45 @@
                 <label class="block text-sm font-medium mb-2"
                   >Service Interested In</label
                 >
-                <select
-                  class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-sky-400/60 transition"
-                >
-                  <option value="" class="bg-gray-900">Select a service</option>
-                  <option value="seo" class="bg-gray-900">
-                    SEO Optimization
-                  </option>
-                  <option value="social" class="bg-gray-900">
-                    Social Media Management
-                  </option>
-                  <option value="ads" class="bg-gray-900">Ads Campaign</option>
-                  <option value="design" class="bg-gray-900">
-                    Graphic Design
-                  </option>
-                  <option value="digital" class="bg-gray-900">
-                    Digital Marketing
-                  </option>
-                </select>
+                <div class="relative">
+                  <select
+                    required
+                    class="select-field w-full appearance-none bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:border-sky-400/60 transition"
+                  >
+                    <option value="" disabled selected class="bg-gray-900">
+                      Select a service
+                    </option>
+                    <option value="seo" class="bg-gray-900">
+                      SEO Optimization
+                    </option>
+                    <option value="social" class="bg-gray-900">
+                      Social Media Management
+                    </option>
+                    <option value="ads" class="bg-gray-900">
+                      Ads Campaign
+                    </option>
+                    <option value="design" class="bg-gray-900">
+                      Graphic Design
+                    </option>
+                    <option value="digital" class="bg-gray-900">
+                      Digital Marketing
+                    </option>
+                  </select>
+
+                  <svg
+                    class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 9l6 6 6-6"
+                    />
+                  </svg>
+                </div>
               </div>
 
               <div>
@@ -1791,13 +2102,12 @@
     <!-- Back to top -->
     <button
       id="toTop"
-      class="fixed bottom-6 right-6 z-50 hidden md:flex items-center gap-2 px-4 py-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-lg hover:bg-white/8 transition"
+      class="fixed bottom-6 right-6 z-50 hidden items-center justify-center w-12 h-12 rounded-full bg-white/5 border border-white/10 backdrop-blur-lg hover:bg-white/10 transition"
       aria-label="Back to top"
       type="button"
     >
-      <span class="text-sm font-medium">Top</span>
       <svg
-        class="w-4 h-4"
+        class="w-5 h-5"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -2020,9 +2330,16 @@
 
       function updateToTop() {
         if (!toTop) return;
-        // Show only after leaving the top area
-        const show = window.scrollY > 140;
-        toTop.classList.toggle("hidden", !show);
+
+        // Show ONLY after we've scrolled past the Home section (i.e., reached Services or below)
+        const servicesEl = document.getElementById("services");
+        const navH = navbar ? navbar.getBoundingClientRect().height : 0;
+        const threshold = servicesEl
+          ? Math.max(0, servicesEl.offsetTop - navH - 8)
+          : Infinity;
+
+        const show = window.scrollY >= threshold && window.scrollY > 0;
+        toTop.style.display = show ? "flex" : "none";
       }
 
       function updateSpy() {
@@ -2060,7 +2377,9 @@
       );
 
       // Back-to-top uses router
-      toTop?.addEventListener("click", () => navigate("/home"));
+      if (toTop) {
+        toTop.addEventListener("click", () => navigate("/home"));
+      }
 
       // ----------------------------
       // Reveal + 3D Tilt
@@ -2085,31 +2404,36 @@
         rootMargin: "0px 0px -70px 0px",
       };
 
-      const revealObserver = new IntersectionObserver((entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
+      // Fallback: if IntersectionObserver isn't available, show everything immediately
+      if (typeof IntersectionObserver === "undefined") {
+        fxTargets.forEach((el) => el.classList.add("is-visible", "fx-live"));
+      } else {
+        const revealObserver = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
 
-          const el = entry.target;
-          el.classList.add("is-visible");
+            const el = entry.target;
+            el.classList.add("is-visible");
 
-          // After reveal is done, make it "live" (snappier interactions)
-          if (!prefersReducedMotion) {
-            setTimeout(() => el.classList.add("fx-live"), 760);
-          } else {
-            el.classList.add("fx-live");
+            // After reveal is done, make it "live" (snappier interactions)
+            if (!prefersReducedMotion) {
+              setTimeout(() => el.classList.add("fx-live"), 760);
+            } else {
+              el.classList.add("fx-live");
+            }
+
+            revealObserver.unobserve(el);
           }
+        }, revealObserverOptions);
 
-          revealObserver.unobserve(el);
-        }
-      }, revealObserverOptions);
-
-      fxTargets.forEach((el) => {
-        if (prefersReducedMotion) {
-          el.classList.add("is-visible", "fx-live");
-          return;
-        }
-        revealObserver.observe(el);
-      });
+        fxTargets.forEach((el) => {
+          if (prefersReducedMotion) {
+            el.classList.add("is-visible", "fx-live");
+            return;
+          }
+          revealObserver.observe(el);
+        });
+      }
 
       function initTilt(el) {
         let raf = null;
@@ -2159,7 +2483,10 @@
       }
 
       if (tiltCapable) {
-        fxTargets.forEach(initTilt);
+        fxTargets.forEach((el) => {
+          if (el.classList.contains("no-tilt")) return;
+          initTilt(el);
+        });
       }
 
       // ----------------------------
@@ -2201,6 +2528,399 @@
         );
       }
 
+      // ----------------------------
+      // Hero Canvas Visual (reliable everywhere)
+      // ----------------------------
+      function initHeroCanvas() {
+        const canvas = document.getElementById("heroCanvas");
+        const fallback = document.getElementById("heroCanvasFallback");
+        if (!canvas) return;
+
+        if (fallback) fallback.style.display = "none";
+
+        const ctx = canvas.getContext("2d", {
+          alpha: true,
+          desynchronized: true,
+        });
+        if (!ctx) {
+          if (fallback) fallback.style.display = "flex";
+          return;
+        }
+
+        const parent = canvas.parentElement;
+        let w = 0;
+        let h = 0;
+        let dpr = Math.min(2, window.devicePixelRatio || 1);
+
+        const reduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+        if (reduced) {
+          // Draw a nice static frame and stop.
+          // We'll still resize so it looks correct.
+        }
+
+        function resize() {
+          const rect = parent.getBoundingClientRect();
+          w = Math.max(1, Math.floor(rect.width));
+          h = Math.max(1, Math.floor(rect.height));
+          dpr = Math.min(2, window.devicePixelRatio || 1);
+          canvas.width = Math.floor(w * dpr);
+          canvas.height = Math.floor(h * dpr);
+          canvas.style.width = w + "px";
+          canvas.style.height = h + "px";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
+
+        // Isometric projection
+        function iso(x, y, z) {
+          // axis: x -> right-down, y -> left-down, z -> up
+          const scale = 1;
+          const ix = (x - y) * scale;
+          const iy = (x + y) * 0.55 * scale - z;
+          return { x: ix, y: iy };
+        }
+
+        function drawCube(cx, cy, size, height, colors, alpha = 1) {
+          const s = size;
+          const hgt = height;
+
+          // corners in iso-space
+          // base square (x,y) from (0,0) to (s,s)
+          const p0 = iso(0, 0, 0);
+          const p1 = iso(s, 0, 0);
+          const p2 = iso(s, s, 0);
+          const p3 = iso(0, s, 0);
+
+          const t0 = iso(0, 0, hgt);
+          const t1 = iso(s, 0, hgt);
+          const t2 = iso(s, s, hgt);
+          const t3 = iso(0, s, hgt);
+
+          const ox = cx;
+          const oy = cy;
+
+          ctx.save();
+          ctx.globalAlpha = alpha;
+
+          // right face (p1,p2,t2,t1)
+          ctx.beginPath();
+          ctx.moveTo(ox + p1.x, oy + p1.y);
+          ctx.lineTo(ox + p2.x, oy + p2.y);
+          ctx.lineTo(ox + t2.x, oy + t2.y);
+          ctx.lineTo(ox + t1.x, oy + t1.y);
+          ctx.closePath();
+          ctx.fillStyle = colors.right;
+          ctx.fill();
+
+          // left face (p0,p3,t3,t0)
+          ctx.beginPath();
+          ctx.moveTo(ox + p0.x, oy + p0.y);
+          ctx.lineTo(ox + p3.x, oy + p3.y);
+          ctx.lineTo(ox + t3.x, oy + t3.y);
+          ctx.lineTo(ox + t0.x, oy + t0.y);
+          ctx.closePath();
+          ctx.fillStyle = colors.left;
+          ctx.fill();
+
+          // top face (t0,t1,t2,t3)
+          ctx.beginPath();
+          ctx.moveTo(ox + t0.x, oy + t0.y);
+          ctx.lineTo(ox + t1.x, oy + t1.y);
+          ctx.lineTo(ox + t2.x, oy + t2.y);
+          ctx.lineTo(ox + t3.x, oy + t3.y);
+          ctx.closePath();
+          ctx.fillStyle = colors.top;
+          ctx.fill();
+
+          // subtle outline
+          ctx.lineWidth = 1;
+          ctx.strokeStyle = "rgba(255,255,255,0.08)";
+          ctx.stroke();
+
+          // sheen highlight
+          const grad = ctx.createLinearGradient(
+            ox + t0.x,
+            oy + t0.y,
+            ox + t2.x,
+            oy + t2.y
+          );
+          grad.addColorStop(0, "rgba(255,255,255,0.10)");
+          grad.addColorStop(0.45, "rgba(255,255,255,0.02)");
+          grad.addColorStop(1, "rgba(255,255,255,0.00)");
+          ctx.fillStyle = grad;
+          ctx.fill();
+
+          ctx.restore();
+        }
+
+        function drawOrb(x, y, r) {
+          const g = ctx.createRadialGradient(
+            x - r * 0.25,
+            y - r * 0.25,
+            1,
+            x,
+            y,
+            r
+          );
+          g.addColorStop(0, "rgba(255,255,255,0.95)");
+          g.addColorStop(0.25, "rgba(56,189,248,0.95)");
+          g.addColorStop(0.7, "rgba(37,99,235,0.35)");
+          g.addColorStop(1, "rgba(37,99,235,0)");
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        function drawRubik(x, y, size, t) {
+          // 2D fake-3D rotating cube (still looks premium & “rubik-like”)
+          // We draw a tilted square prism with animated hue shift.
+          const ang = t * 0.0012;
+          const tilt = 0.72;
+
+          const s = size;
+          const dx = Math.cos(ang) * s * 0.28;
+          const dy = Math.sin(ang) * s * 0.18;
+
+          const top = {
+            top: "rgba(255,255,255,0.10)",
+            left: "rgba(56,189,248,0.80)",
+            right: "rgba(37,99,235,0.90)",
+          };
+
+          // base center
+          const cx = x;
+          const cy = y;
+
+          // top diamond
+          ctx.save();
+          ctx.translate(cx + dx, cy + dy);
+
+          ctx.beginPath();
+          ctx.moveTo(0, -s * 0.55);
+          ctx.lineTo(s * 0.62, -s * 0.15);
+          ctx.lineTo(0, s * 0.25);
+          ctx.lineTo(-s * 0.62, -s * 0.15);
+          ctx.closePath();
+          ctx.fillStyle = top.top;
+          ctx.fill();
+
+          // left face
+          ctx.beginPath();
+          ctx.moveTo(-s * 0.62, -s * 0.15);
+          ctx.lineTo(0, s * 0.25);
+          ctx.lineTo(0, s * (0.25 + tilt));
+          ctx.lineTo(-s * 0.62, s * (-0.15 + tilt));
+          ctx.closePath();
+          ctx.fillStyle = top.left;
+          ctx.fill();
+
+          // right face
+          ctx.beginPath();
+          ctx.moveTo(s * 0.62, -s * 0.15);
+          ctx.lineTo(0, s * 0.25);
+          ctx.lineTo(0, s * (0.25 + tilt));
+          ctx.lineTo(s * 0.62, s * (-0.15 + tilt));
+          ctx.closePath();
+          ctx.fillStyle = top.right;
+          ctx.fill();
+
+          // grid overlay
+          ctx.globalAlpha = 0.22;
+          ctx.strokeStyle = "rgba(0,0,0,0.8)";
+          ctx.lineWidth = 2;
+          const gridN = 3;
+          for (let i = 1; i < gridN; i++) {
+            const k = i / gridN;
+            // top grid
+            ctx.beginPath();
+            ctx.moveTo(-s * 0.62 + s * 0.62 * k, -s * 0.15 - s * 0.4 * k);
+            ctx.lineTo(s * 0.62 * k, s * 0.25 - s * 0.4 * k);
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(s * 0.62 - s * 0.62 * k, -s * 0.15 - s * 0.4 * k);
+            ctx.lineTo(-(s * 0.62) * k, s * 0.25 - s * 0.4 * k);
+            ctx.stroke();
+          }
+          ctx.globalAlpha = 1;
+
+          // outline + shadow
+          ctx.strokeStyle = "rgba(255,255,255,0.12)";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(-s * 0.78, -s * 0.72, s * 1.56, s * 1.56);
+
+          ctx.restore();
+        }
+
+        let raf = null;
+        const start = performance.now();
+
+        function frame(now) {
+          raf = requestAnimationFrame(frame);
+
+          // clear
+          ctx.clearRect(0, 0, w, h);
+
+          // ambient vignette
+          const vg = ctx.createRadialGradient(
+            w * 0.5,
+            h * 0.45,
+            40,
+            w * 0.5,
+            h * 0.45,
+            Math.max(w, h) * 0.75
+          );
+          vg.addColorStop(0, "rgba(56,189,248,0.05)");
+          vg.addColorStop(0.35, "rgba(37,99,235,0.05)");
+          vg.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = vg;
+          ctx.fillRect(0, 0, w, h);
+
+          // staircase layout
+          const steps = 8;
+          const size = clamp(Math.min(w, h) * 0.13, 38, 68);
+          const height = size * 0.72;
+
+          // anchor in center-ish
+          const baseX = w * 0.44;
+          const baseY = h * 0.66;
+
+          // draw from back to front for correct overlap
+          for (let i = steps - 1; i >= 0; i--) {
+            const tx = i * (size * 0.98);
+            const ty = 0;
+            const tz = i * (height * 0.62);
+
+            const p = iso(tx, ty, tz);
+            const bob = Math.sin((now - start) * 0.001 + i * 0.55) * 3.2;
+
+            const colors = {
+              top: `rgba(255,255,255,${0.14 + i * 0.004})`,
+              left: `rgba(56,189,248,${0.22 + i * 0.012})`,
+              right: `rgba(37,99,235,${0.24 + i * 0.012})`,
+            };
+            drawCube(baseX + p.x, baseY + p.y + bob, size, height, colors, 1);
+          }
+
+          // runner orb climbing
+          const t = (now - start) * 0.00018;
+          const k = t % 1;
+          const idx = k * (steps - 1);
+          const i0 = Math.floor(idx);
+          const i1 = Math.min(steps - 1, i0 + 1);
+          const f = idx - i0;
+
+          function stepPos(i) {
+            const tx = i * (size * 0.98);
+            const tz = i * (height * 0.62);
+            const p = iso(tx + size * 0.5, size * 0.5, tz + height * 0.8);
+            return { x: baseX + p.x, y: baseY + p.y };
+          }
+
+          const pA = stepPos(i0);
+          const pB = stepPos(i1);
+          const orbX = pA.x + (pB.x - pA.x) * f;
+          const orbY = pA.y + (pB.y - pA.y) * f - 30;
+          drawOrb(orbX, orbY, clamp(size * 0.16, 8, 14));
+
+          // rubik cube in top-right area
+          drawRubik(
+            w * 0.72,
+            h * 0.28,
+            clamp(Math.min(w, h) * 0.16, 56, 92),
+            now
+          );
+
+          // subtle particles
+          ctx.globalAlpha = 0.18;
+          ctx.fillStyle = "rgba(255,255,255,0.65)";
+          for (let i = 0; i < 18; i++) {
+            const px = w * 0.15 + ((i * 97) % 230);
+            const py = h * 0.18 + ((i * 131 + now * 0.02) % (h * 0.8));
+            ctx.fillRect(px, py, 1.2, 1.2);
+          }
+          ctx.globalAlpha = 1;
+        }
+
+        function drawStatic() {
+          const now = performance.now();
+          // render one frame
+          const saved = raf;
+          raf = null;
+          // temporarily call frame logic without scheduling
+          ctx.clearRect(0, 0, w, h);
+          const vg = ctx.createRadialGradient(
+            w * 0.5,
+            h * 0.45,
+            40,
+            w * 0.5,
+            h * 0.45,
+            Math.max(w, h) * 0.75
+          );
+          vg.addColorStop(0, "rgba(56,189,248,0.05)");
+          vg.addColorStop(0.35, "rgba(37,99,235,0.05)");
+          vg.addColorStop(1, "rgba(0,0,0,0)");
+          ctx.fillStyle = vg;
+          ctx.fillRect(0, 0, w, h);
+
+          const steps = 8;
+          const size = clamp(Math.min(w, h) * 0.13, 38, 68);
+          const height = size * 0.72;
+          const baseX = w * 0.44;
+          const baseY = h * 0.66;
+
+          for (let i = steps - 1; i >= 0; i--) {
+            const tx = i * (size * 0.98);
+            const tz = i * (height * 0.62);
+            const p = iso(tx, 0, tz);
+            const colors = {
+              top: `rgba(255,255,255,${0.14 + i * 0.004})`,
+              left: `rgba(56,189,248,${0.22 + i * 0.012})`,
+              right: `rgba(37,99,235,${0.24 + i * 0.012})`,
+            };
+            drawCube(baseX + p.x, baseY + p.y, size, height, colors, 1);
+          }
+
+          drawOrb(w * 0.46, h * 0.45, 10);
+          drawRubik(
+            w * 0.72,
+            h * 0.28,
+            clamp(Math.min(w, h) * 0.16, 56, 92),
+            now
+          );
+
+          raf = saved;
+        }
+
+        const ro = new ResizeObserver(() => {
+          resize();
+          if (reduced) drawStatic();
+        });
+        ro.observe(parent);
+        resize();
+
+        if (reduced) {
+          drawStatic();
+          return;
+        }
+
+        raf = requestAnimationFrame(frame);
+
+        // cleanup
+        window.addEventListener(
+          "beforeunload",
+          () => {
+            if (raf) cancelAnimationFrame(raf);
+            ro.disconnect();
+          },
+          { once: true }
+        );
+      }
+
       // Init
       window.addEventListener("DOMContentLoaded", () => {
         handleInitialRoute();
@@ -2208,6 +2928,7 @@
         updateToTop();
         updateProgress();
         updateNavbarChrome();
+        initHeroCanvas();
         requestAnimationFrame(updateSpy);
       });
     </script>
